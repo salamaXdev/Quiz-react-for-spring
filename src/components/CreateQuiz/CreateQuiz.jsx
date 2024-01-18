@@ -5,15 +5,15 @@ import  './CreateQuiz.css'
 
 const CreateQuiz = () => {
   const [quizTitle, setQuizTitle] = useState('');
-  const [questions, setQuestions] = useState([{ text: '', options: [{ text: '', isCorrect: false }] }]);
+  const [questions, setQuestions] = useState([{ text: '', options: [{ text: '', correct: false }] }]);
 
   const addQuestion = () => {
-    setQuestions([...questions, { text: '', options: [{ text: '', isCorrect: false }] }]);
+    setQuestions([...questions, { text: '', options: [{ text: '', correct: false }] }]);
   };
 
   const addOption = (questionIndex) => {
     const updatedQuestions = [...questions];
-    updatedQuestions[questionIndex].options.push({ text: '', isCorrect: false });
+    updatedQuestions[questionIndex].options.push({ text: '', correct: false });
     setQuestions(updatedQuestions);
   };
 
@@ -21,8 +21,8 @@ const CreateQuiz = () => {
     if (localStorage.getItem('role') !== 'prof') {
       window.location.href = '/login';
     }
-    if (!localStorage.getItem('token')) {
-      window.location.href = '/login'; // Redirect to the login page 
+    if(localStorage.getItem('isLoggedIn')===false){
+      window.location.href = '/login';
     }
   }, []);
 
@@ -87,10 +87,10 @@ const CreateQuiz = () => {
                 Correcte:<br></br>
                 <input
                   type="checkbox"
-                  checked={option.isCorrect}
+                  checked={option.correct}
                   onChange={() => {
                     const updatedQuestions = [...questions];
-                    updatedQuestions[questionIndex].options[optionIndex].isCorrect = !option.isCorrect;
+                    updatedQuestions[questionIndex].options[optionIndex].correct = !option.correct;
                     setQuestions(updatedQuestions);
                   }}
                 />
