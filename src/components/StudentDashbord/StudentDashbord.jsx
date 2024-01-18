@@ -13,10 +13,7 @@ const StudentDashbord = () => {
     if(localStorage.getItem('isLoggedIn')===false){
       window.location.href = '/login';
     }
-    // activate this code when using express to check the jwt
-    // if (!localStorage.getItem('token')) {
-    //   window.location.href = '/login'; 
-    // }
+
 
   }, []);
 
