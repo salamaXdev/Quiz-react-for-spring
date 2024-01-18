@@ -46,26 +46,27 @@ const QuizesList = () => {
       });
 
       // After successful deletion, update the state to reflect the changes
-      setQuizzes((prevQuizzes) => prevQuizzes.filter((quiz) => quiz._id !== quizId));
+      setQuizzes((prevQuizzes) => prevQuizzes.filter((quiz) => quiz.id !== quizId));
     } catch (error) {
       console.error('Erreur lors de la suppression du quiz', error);
     }
   };
 
-  const handleViewAttempts = (quizId) => {
-    // Navigate to the attempts page for the selected quiz
-    navigate(`/profquizzes/quizez/${quizId}`);
+  const handleViewAttempts = (quizId, quizTitle) => {
+    // Navigate to the attempts page for the selected quiz with quizId and quizTitle as parameters
+    navigate(`/profquizzes/quizez/${quizId}?title=${encodeURIComponent(quizTitle)}`);
   };
+
 
   return (
     <div>
       <h2>Liste des Quiz</h2>
       <ul>
         {quizzes.map((quiz) => (
-          <li key={quiz._id} className='quizlist'>
+          <li key={quiz.id} className='quizlist'>
             <p>{quiz.title}</p>
-            <button onClick={() => handleDeleteQuiz(quiz._id)}>Supprimer</button>
-            <button onClick={() => handleViewAttempts(quiz._id)}>Voir les tentatives</button>
+            <button onClick={() => handleDeleteQuiz(quiz.id)}>Supprimer</button>
+            <button onClick={() => handleViewAttempts(quiz.id, quiz.title)}>Voir les tentatives</button>
           </li>
         ))}
       </ul>

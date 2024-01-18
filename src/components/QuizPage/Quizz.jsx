@@ -61,24 +61,24 @@ const QuizPage = () => {
       setSubmitting(true);
   
       const answersArray = Object.entries(selectedAnswers).map(([questionId, selectedOptionId]) => {
-        // changes => express : _id  spring : id
+
         const question = quiz.questions.find((q) => q.id === questionId);
         const selectedOption = question.options.find((option) => option.id === selectedOptionId);
   
         return {
-          question: questionId,
+          questionId: questionId,
           selectedOption: {
             text: selectedOption.text,
-            // changes => express : isCorrect  spring : correct
-            isCorrect: selectedOption.isCorrect,
+            
+            correct: selectedOption.correct,
           },
         };
       });
   
       const idStudent = localStorage.getItem('UserId');
       const response = await axios.post(`http://localhost:3000/attempts/create`, {
-        student: idStudent,
-        quiz: id,
+        studentId: idStudent,
+        quizId: id,
         answers: answersArray,
       },{
         headers: {
@@ -107,7 +107,7 @@ const QuizPage = () => {
     <div>
       <h2>{quiz.title}</h2>
       {quiz.questions.map((question) => (
-        // changes => express : _id  spring : id
+
         <div key={question.id}>
           <p>{question.text}</p>
           {question.options.map((option) => (
